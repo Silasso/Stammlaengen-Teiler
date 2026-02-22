@@ -205,6 +205,28 @@
       return n.toFixed(decimals).replace('.', ',');
     }
 
+    // Berechnung der Stückzahl unter Berücksichtigung des Kerf
+    function calculatePieces(totalCm, maxCm, kerfMm) {
+      const kerfCm = kerfMm / 10; // mm -> cm
+
+      // Start mit minimaler Stückzahl
+      let pieces = 2;
+
+      while (pieces > 0) {
+        const totalKerfCm = kerfCm * (pieces - 1); // Gesamtschnittbreite
+        const usableCm = totalCm - totalKerfCm;
+        const pieceLenCm = usableCm / pieces;
+
+        if (pieceLenCm <= maxCm) {
+          return { pieces, pieceLenCm };
+        }
+        pieces++;
+      }
+
+      // Fallback: nur ein Stück möglich
+      return { pieces: 1, pieceLenCm: totalCm };
+    }
+
     function calculate(){
       const totalRaw = el('totalLen').value;
       const totalUnit = el('totalUnit').value;
@@ -235,18 +257,9 @@
       if(maxCm <= 0){ alert('Ungültige maximale Länge.'); return; }
 
       // Stückzahl unter Berücksichtigung der Schnittbreite bestimmen
-      let pieces = Math.ceil(totalCm / maxCm);
-      let pieceLenCm;
-
-      while(pieces > 0){
-        const cuts = Math.max(0, pieces - 1);
-        const kerfTotalCm = (kerfMm / 10) * cuts; // mm -> cm
-        const usableCm = totalCm - kerfTotalCm;
-        pieceLenCm = usableCm / pieces;
-
-        if(pieceLenCm <= maxCm) break;
-        pieces++;
-      }
+      const result = calculatePieces(totalCm, maxCm, kerfMm);
+      let pieces = result.pieces;
+      let pieceLenCm = result.pieceLenCm;
 
       // Formatiere Ausgabe
       const pieceLenCmStr = formatNumber(pieceLenCm, decimals) + ' cm';
