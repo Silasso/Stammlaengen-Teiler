@@ -22,6 +22,9 @@
     .result{margin-top:14px;padding:12px;border-radius:10px;background:#f8fafc;border:1px solid #eef2ff}
     .result .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed rgba(15,23,42,0.04)}
     .result .row:last-child{border-bottom:0}
+    .mark-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dashed rgba(15,23,42,0.04)}
+    .mark-row:last-child{border-bottom:0}
+    .mark-value{font-weight:700;font-size:16px;color:#0f172a}
     .small{font-size:13px;color:var(--muted)}
     .example{font-size:13px;color:var(--muted);margin-top:8px}
     footer{margin-top:12px;font-size:13px;color:var(--muted)}
@@ -251,7 +254,25 @@
         const pos = i * pieceLenCm + (i - 1) * kerfCm;
         markList.push(`${i}. Schnitt: ${formatNumber(pos, decimals)} cm`);
       }
-      el('marksFull').innerHTML = markList.join('<br>');
+      // Markierungen als strukturierte Rows darstellen
+      el('marksFull').innerHTML = '';
+      markList.forEach((text, index) => {
+        const parts = text.split(':');
+        const row = document.createElement('div');
+        row.className = 'mark-row';
+
+        const left = document.createElement('div');
+        left.className = 'small';
+        left.textContent = parts[0];
+
+        const right = document.createElement('div');
+        right.className = 'mark-value';
+        right.textContent = parts[1].trim();
+
+        row.appendChild(left);
+        row.appendChild(right);
+        el('marksFull').appendChild(row);
+      });
 
       // Wenn immer vom Rest gemessen wird (Mitte des Schnittes berücksichtigen)
       const restMeasure = pieceLenCm - (kerfCm / 2);
