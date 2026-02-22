@@ -155,8 +155,7 @@
           <div id="marksFull" class="small" style="line-height:1.6"></div>
         </div>
         <div style="margin-top:10px">
-          <div class="small" style="font-weight:600;margin-bottom:4px">Wenn immer vom Rest gemessen wird:</div>
-          <div id="marksRest" class="small" style="line-height:1.6"></div>
+          <div class="row"><div class="small">Wenn immer vom Rest gemessen wird / Nächster Schnitt vom aktuellen Stammende:</div><div id="marksRest" style="font-weight:700"></div></div>
         </div>
         <div class="logviz">
           <div class="small" style="font-weight:600;margin-bottom:6px">Grafische Darstellung des Stammes</div>
@@ -164,11 +163,9 @@
         </div>
       </div>
 
-      <div class="example">Beispiel: Stammlänge = 2 m, max = 30 cm → 7 Stück à 28,57 cm (7 × 28,57 = 200 cm).</div>
-
     </div>
 
-    <footer>Wenn du Schnittverluste (Schnittstärke) berücksichtigen willst, sag Bescheid — ich füge ein Feld hinzu.</footer>
+    <footer>by Silas Korbach</footer>
   </div>
 
   <script>
@@ -259,7 +256,7 @@
       // Wenn immer vom Rest gemessen wird (Mitte des Schnittes berücksichtigen)
       const restMeasure = pieceLenCm - (kerfCm / 2);
       if(cuts > 0){
-        el('marksRest').textContent = `Jeder nächste Schnitt bei ${formatNumber(restMeasure, decimals)} cm vom aktuellen Stammende.`;
+        el('marksRest').textContent = `${formatNumber(restMeasure, decimals)} cm`;
       } else {
         el('marksRest').textContent = '-';
       }
