@@ -34,7 +34,7 @@
     .logbar{
       position:relative;
       height:140px;
-      border-radius:70px;
+      border-radius:40px;
       background-image: url('relief-texture-brown-bark-tree-close-up.jpg');
       background-repeat: no-repeat;
       background-size: cover; /* Bild füllt gesamten Stamm */
@@ -86,7 +86,12 @@
       box-shadow:inset 0 0 6px rgba(0,0,0,0.6);
     }
     .label{position:absolute;top:-22px;font-size:11px;white-space:nowrap;transform:translateX(-50%);color:#111827}
-    .seglabel{pointer-events:none;text-shadow:0 1px 2px rgba(255,255,255,0.7)}
+    .seglabel {
+    pointer-events: none;
+    text-shadow: 0 1px 2px rgba(255,255,255,0.7);
+    text-align: center; /* horizontal zentrieren */
+    display: block;     /* falls es ein inline-Element ist */
+    }
   </style>
   </style>
 </head>
@@ -158,7 +163,10 @@
           <div id="marksFull" class="small" style="line-height:1.6"></div>
         </div>
         <div style="margin-top:10px">
-          <div class="row"><div class="small">Wenn immer vom Rest gemessen wird / Nächster Schnitt vom aktuellen Stammende:</div><div id="marksRest" style="font-weight:700"></div></div>
+          <div class="small" style="font-weight:600;margin-bottom:4px">Markierung/Länge (Wenn immer vom Rest-Stamm gemessen wird)</div>
+          <div class="row"><div class="small">Nächster Schnitt vom aktuellen Stammende:</div><div id="marksRest" style="font-weight:700"></div></div>
+        </div>
+          
         </div>
         <div class="logviz">
           <div class="small" style="font-weight:600;margin-bottom:6px">Grafische Darstellung des Stammes</div>
