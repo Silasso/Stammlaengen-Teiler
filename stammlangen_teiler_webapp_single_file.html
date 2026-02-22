@@ -45,7 +45,11 @@
         0 14px 28px rgba(0,0,0,0.30);
       overflow:hidden;
     }
-
+    div input#kerf {
+        width: 100%;        /* nimmt maximal die Breite des Containers */
+        max-width: 200px;   /* optional: maximale Breite festlegen */
+        box-sizing: border-box; /* Padding und Border werden in die Breite eingerechnet */
+    }
     
     .logbar::before{
       top:0;
@@ -127,23 +131,23 @@
               <option value="m">m</option>
             </select>
           </div>
-          <div class="small">Die App berechnet <em>wie viele</em> Stück benötigt werden (aufgerundet) und die gleichmäßige Länge pro Stück.</div>
+          <div class="small">Die App berechnet <em>wie viele</em> Stücke (minimal) benötigt werden und die gleichmäßige Länge pro Stück.</div>
         </div>
 
         <div>
           <label for="decimals">Nachkommastellen</label>
           <select id="decimals" aria-label="Anzahl Nachkommastellen">
             <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2" selected>2</option>
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
             <option value="3">3</option>
           </select>
         </div>
 
         <div>
-          <label for="kerf">Schnittbreite pro Schnitt (mm)</label>
+          <label for="kerf">Schnittstärke pro Schnitt (mm)</label>
           <input id="kerf" type="text" inputmode="decimal" placeholder="z. B. 3" aria-label="Schnittbreite in mm" />
-          <div class="small">Wird pro Schnitt einmal abgezogen (Anzahl Schnitte = Stückzahl - 1).</div>
+          <div class="small">Wird pro Schnitt einmal abgezogen (Verlust).</div>
         </div>
 
         <div class="controls" style="align-self:center">
@@ -159,11 +163,11 @@
         <div class="row"><div class="small">Kontrollrechnung</div><div id="check" class="small"></div></div>
         <div class="row"><div class="small">Anzahl Schnitte</div><div id="cuts" style="font-weight:700"></div></div>
         <div style="margin-top:10px">
-          <div class="small" style="font-weight:600;margin-bottom:4px">Markierungen (vom Stamm-Anfang gemessen)</div>
+          <div class="small" style="font-weight:600;margin-bottom:4px">Markierungen (über den gesamten Stamm)</div>
           <div id="marksFull" class="small" style="line-height:1.6"></div>
         </div>
         <div style="margin-top:10px">
-          <div class="small" style="font-weight:600;margin-bottom:4px">Markierung/Länge (Wenn immer vom Rest-Stamm gemessen wird)</div>
+          <div class="small" style="font-weight:600;margin-bottom:4px">Markierung(1 Stück) (Wenn immer vom Rest-Stamm gemessen wird)</div>
           <div class="row"><div class="small">Nächster Schnitt vom aktuellen Stammende:</div><div id="marksRest" style="font-weight:700"></div></div>
         </div>
           
@@ -324,6 +328,7 @@
     el('maxUnit').value = 'cm';
 
     function renderLog(totalCm, pieceLenCm, kerfCm, pieces){
+      const decimals = parseInt(el('decimals').value, 10);
       const bar = el('logBar');
       bar.innerHTML = '';
       const cuts = Math.max(0, pieces - 1);
@@ -341,7 +346,7 @@
         // Scheitlänge direkt im Segment anzeigen
         const segLabel = document.createElement('div');
         segLabel.className = 'seglabel';
-        segLabel.textContent = formatNumber(pieceLenCm, 2) + ' cm';
+        segLabel.textContent = formatNumber(pieceLenCm, decimals) + ' cm';
         seg.appendChild(segLabel);
 
         currentPos += pieceLenCm;
