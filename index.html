@@ -276,7 +276,7 @@
       const kerfCm = kerfMm / 10;
       const markList = [];
       for(let i = 1; i <= cuts; i++){
-        const pos = i * pieceLenCm + (i - 1) * kerfCm;
+        const pos = i * pieceLenCm + (kerfCm / 2);
         markList.push(`${i}. Schnitt: ${formatNumber(pos, decimals)} cm`);
       }
       // Markierungen als strukturierte Rows darstellen
