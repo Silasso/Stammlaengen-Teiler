@@ -300,7 +300,7 @@
       });
 
       // Wenn immer vom Rest gemessen wird (Mitte des Schnittes berücksichtigen)
-      const restMeasure = pieceLenCm - (kerfCm / 2);
+      const restMeasure = pieceLenCm + (kerfCm / 2);
       if(cuts > 0){
         el('marksRest').textContent = `${formatNumber(restMeasure, decimals)} cm`;
       } else {
