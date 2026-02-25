@@ -158,7 +158,7 @@
       </form>
 
       <div id="output" class="result" aria-live="polite" style="display:none">
-        <div class="row"><div class="small">Benötigte Stückzahl</div><div id="pieces" style="font-weight:700"></div></div>
+        <div class="row"><div class="small">Stückzahl</div><div id="pieces" style="font-weight:700"></div></div>
         <div class="row"><div class="small">Länge pro Stück</div><div id="pieceLen" style="font-weight:700"></div></div>
         <div class="row"><div class="small">Kontrollrechnung</div><div id="check" class="small"></div></div>
         <div class="row"><div class="small">Anzahl Schnitte</div><div id="cuts" style="font-weight:700"></div></div>
@@ -275,12 +275,12 @@
       // Markierungen berechnen
       const kerfCm = kerfMm / 10;
       const markList = [];
+      let pos;
       for(let i = 1; i <= cuts; i++){
-        let pos;
         if(i == 1) {
           pos = i * (pieceLenCm + (kerfCm / 2));
         }else {
-          pos = i * (pieceLenCm + kerfCm);
+          pos = pos + (pieceLenCm + kerfCm);
         }
         markList.push(`${i}. Schnitt: ${formatNumber(pos, decimals)} cm`);
       }
