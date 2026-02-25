@@ -278,9 +278,9 @@
       for(let i = 1; i <= cuts; i++){
         let pos;
         if(i == 1) {
-          pos = i * (pieceLenCm + (kerfCm));
-        }else {
           pos = i * (pieceLenCm + (kerfCm / 2));
+        }else {
+          pos = i * (pieceLenCm + kerfCm);
         }
         markList.push(`${i}. Schnitt: ${formatNumber(pos, decimals)} cm`);
       }
